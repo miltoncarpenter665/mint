@@ -1,18 +1,13 @@
 #!/bin/bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
-sleep 2
-
-# in lieu of restarting the shell
-\. "$HOME/.nvm/nvm.sh"
-
-nvm install 23
-sleep 2
-
-nvm current
-sleep 2
-
-node -v && npm
-sleep 2
+if ! command -v node &> /dev/null || ! command -v npm &> /dev/null; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    nvm install 23
+    nvm use 23
+    node -v && npm -v
+fi
 
 array=()
 for i in {a..z} {A..Z} {0..9}; 
